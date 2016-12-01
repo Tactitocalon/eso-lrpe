@@ -1,0 +1,59 @@
+notes:
+
+Client technology: Java, probably
+Server technology: node.js, or Spring Boot with Jetty or something. Whatever is easier.
+
+
+ESO is very strict on file I/O. This makes it very difficult to design a RP addon.
+
+The best form of file I/O seems to be Addon settings files (read on addon startup, saved on game shutdown?). It is NOT realtime file I/O.
+
+Current idea is to use the settings file for the addon as a database of all roleplayers. Default Lua memory limit seems to be 64 MB, and it is configurable.
+
+Create a 3rd party tool that downloads a database of all roleplayers and configures the setting file accordingly. If date/time functions are available in ESO's API, should force users to run the 3rd party tool at least once a day (by making the addon throw annoying warning messages if you haven't updated). Store a timestamp in the database.
+
+Database is a map that will contain:
+character name as the key (probably use charactername@accountname, eg Talen-Chath@Tactitocalon)
+data:
+ - display name (leave blank if character name = display name)
+ - maybe a list of flags via bitwise magic (think WC3 style save/load codes)
+ - zlib compressed short character profile (maximum 2000 characters)
+
+consider performance and memory limitations.
+also, if we can lazy load profiles, we could potentially increase the limit significantly. 
+a performance improvement might be grouping up player profiles into groups of 100, for better compressibility
+
+
+Ingame, you can see:
+ - If a player is a RPer by targeting them / mouse over maybe
+ - their display name is used instead of their actual charname in chat
+ - display their profile
+ - click a button to open a popup with a URL to their "FULL" profile, which they can copy+paste into a browser (leads to a centralized website, using their escaped or base64 character name as a key)
+
+
+The 3rd party tool will need an efficient way to diff its local database with the remote centralized master database. I'm sure there are already solutions for this.
+
+If there is not, one solution might be to:
+ - have the Client tell the Server it's version of the database (eg. version 441512)
+ - The Server keeps track (INCREMENTALLY) of the contents of the last 10000 versions (and every 15 minutes it makes a new version). Server calculates what differences there are between the version sent, and the latest version, and sents that to the Client.
+ - If the Server can't figure it out, it sends the whole database to the Client.
+ - no we just need a table with like data and a version number of when that data was updated
+
+
+
+Maybe use AutoHotKey for the 3rd party tool for "trust" reasons. java would be preferred though.
+edit: AHK has virtually no HTTPS support. java it is.
+https://github.com/davidm/lua-compress-deflatelua
+
+
+ideas for enhancements:
+ - button you can press ingame that broadcasts your desire to RP with your location by opening a URL with your location encoded as a parameter. Shows other players similarly broadcasting.
+ - tool will update profile database, then launch ESO (either normally via executing eso.exe, or by resolving a steam URI)
+ 
+ 
+Anti-abuse features:
+ - captcha upon registering a new character, to stop spam attacks. probably use a google captcha with an embedded browser for the client.
+ - client can have a TRP3-style blacklist for NSFW profiles. also add opt-in flag for users to mark their own profiles NSFW
+ - need a moderation team for stopping abusive profiles (pedophilia, hate speech, etc.)
+ - need to stop people from registering profiles for other people. this means LRPE's database will need to have its own authentication.
+ - log IPs to ban abusers

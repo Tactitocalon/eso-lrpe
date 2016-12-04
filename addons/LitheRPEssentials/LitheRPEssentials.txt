@@ -1,0 +1,12 @@
+## Title: Lithe RP Essentials
+## Description: Roleplaying profile support, so you can describe in detail how lithe and curvy your Bosmer waifu character is.
+## APIVersion: 100017
+## Author: Tactitocalon
+## SavedVariables: LRPE_SavedVariables
+
+lib/LibStub/LibStub.lua
+
+lib/libChat2/libChat2.lua
+
+data/LitheDatabase.lua
+LitheEngine.lua

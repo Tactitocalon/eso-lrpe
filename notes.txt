@@ -1,5 +1,25 @@
 notes:
 
+http://www.esoui.com/downloads/info44-LibStub.html
+
+http://www.esoui.com/downloads/info7-LibAddonMenu.html
+
+
+maybe we can use this for RP names?
+http://www.esoui.com/downloads/info1334-CustomTitles.html
+
+essential for RP name rewriting in chat:
+http://www.esoui.com/downloads/info740-libChat2.html
+
+this lib allows for VERY slow data transfer to GROUP members only:
+http://www.esoui.com/downloads/info1337-LibGroupSocket.html
+
+filtering. might be useful.
+http://www.esoui.com/downloads/info1311-LibTextFilter.html
+
+
+
+
 Client technology: Java, probably
 Server technology: node.js, or Spring Boot with Jetty or something. Whatever is easier.
 

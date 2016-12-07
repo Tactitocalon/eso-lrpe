@@ -1,3 +1,4 @@
 /lrpe-server/.gradle
 /lrpe-server/build
 /lrpe-server/.idea
+/lrpe-server/config/application.yml

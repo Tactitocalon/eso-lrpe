@@ -69,6 +69,8 @@ https://github.com/davidm/lua-compress-deflatelua
 ideas for enhancements:
  - button you can press ingame that broadcasts your desire to RP with your location by opening a URL with your location encoded as a parameter. Shows other players similarly broadcasting.
  - tool will update profile database, then launch ESO (either normally via executing eso.exe, or by resolving a steam URI)
+ - integrate with teso-rp.com events (and other websites). load them into the game, have popups alerting players to events when they occur.
+ 
  
  
 Anti-abuse features:

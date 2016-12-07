@@ -1,0 +1,40 @@
+GET getLitheDatabase(long existingVersion) : LitheDatabaseUpdate
+	Returns JSON of profile data. use existingVersion to compute a diff of changed profiles (note: profiles becoming inactive also counts as a change!)
+	If the client downloads a database update and after merging, the total profile count is not as expected, we will need to do a full download.
+	
+	LitheDatabaseUpdate
+		DatabaseVersion : long
+		SchemaVersion : int
+		TotalProfileCount : int
+		ProfileData : ProfileData[]
+			characterName : string
+			displayName : string
+			profileText : string
+			profileUrl : string
+			inactive : boolean
+			deleted : boolean   // if set to true, only characterName will be provided.
+
+POST updateProfile(string accountName, string password, ProfileData profileData)
+	Creates or updates profile data for the specified character.
+	Possible errors:
+		Unknown account
+		Invalid password
+		Character does not belong to account
+		Too many characters
+		Profile data fails validation
+		
+POST deleteProfile(string accountName, string password, string characterName)
+	Deletes profile data for the specified character.
+	Possible errors:
+		Unknown account
+		Invalid password
+		Character does not belong to account
+		Unknown character
+		
+POST createAccount(string accountName, string password, string captcha)
+	Creates a new account
+	Possible errors:
+		Captcha failed
+		Invalid account
+		Invalid password
+		Account already exists

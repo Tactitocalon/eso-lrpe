@@ -1,0 +1,8 @@
+config:
+  databaseConfig: "Hello world"
+
+spring.datasource:
+  url: "jdbc:mysql://localhost/test"
+  driver-class-name: "com.mysql.jdbc.Driver"
+  username: "username"
+  password: "test"

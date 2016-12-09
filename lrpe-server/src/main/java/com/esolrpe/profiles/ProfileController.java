@@ -1,6 +1,7 @@
 package com.esolrpe.profiles;
 
 import com.esolrpe.Application;
+import com.esolrpe.auth.AuthenticationDetails;
 import com.esolrpe.util.Megaserver;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +29,8 @@ public class ProfileController {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    @RequestMapping(value="{megaserverCode}/download", method = RequestMethod.GET)
-    public ProfileDatabaseUpdate downloadDatabase(
+    @RequestMapping(value="{megaserverCode}/sync", method = RequestMethod.GET)
+    public ProfileDatabaseUpdate syncProfiles(
             @PathVariable String megaserverCode,
             @RequestParam(defaultValue = "0") Long currentVersion) {
         Megaserver megaserver = Megaserver.fromCode(StringUtils.upperCase(megaserverCode));
@@ -71,19 +72,28 @@ public class ProfileController {
         return databaseUpdate;
     }
 
-    @RequestMapping(value = "{megaserverCode}/update", method = RequestMethod.PUT)
+    @RequestMapping(value = "{megaserverCode}/{characterName}", method = RequestMethod.PUT)
     public void updateProfile(@PathVariable String megaserverCode,
+                              @PathVariable String characterName,
                               @RequestBody ContextUpdateProfile profileData) {
         profileData.getAuthenticationDetails().authenticate(jdbcTemplate);
 
         // TODO update
     }
 
-    @RequestMapping(value = "{megaserverCode}/delete", method = RequestMethod.POST)
+    @RequestMapping(value = "{megaserverCode}/{characterName}/delete", method = RequestMethod.POST)
     public void deleteProfile(@PathVariable String megaserverCode,
                               @RequestBody ContextDeleteProfile profileData) {
         profileData.getAuthenticationDetails().authenticate(jdbcTemplate);
 
         // TODO delete
+    }
+
+    @RequestMapping(value = "{megaserverCode}/accountprofiles", method = RequestMethod.GET)
+    public void getProfilesForAccount(@PathVariable String megaserverCode,
+                                      @RequestBody AuthenticationDetails authenticationDetails) {
+        authenticationDetails.authenticate(jdbcTemplate);
+
+        // TODO get profiles for account
     }
 }

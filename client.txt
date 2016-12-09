@@ -1,0 +1,22 @@
+Account details screen
+	- show if account details not configured, or if account auth fails
+	- basically a login page. have a button for "register" that switches to register mode.
+	- need to make very clear to NOT use your ESO username / password
+	
+ESO location screen
+	- show if missing config
+	- confirms location of ESO (or if you run it through steam)
+
+LRPE addon location screen
+	- show if missing config
+	- confirms location of addon (you need to install it first!)
+	
+Main screen
+	- shows list of character profiles, with NEW / EDIT / DELETE buttons.
+	- new / edit will bring up a popup to edit profile details.
+	- delete will show a confirmation dialog box to delete the profile.
+	- has a big LAUNCH ESO button
+	
+Launching ESO screen
+	- shows download progress of profile sync
+	- then launches ESO

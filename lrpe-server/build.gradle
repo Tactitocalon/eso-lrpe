@@ -10,6 +10,8 @@ repositories {
 }
 
 dependencies {
+    compile project(':lrpe-shared')
+
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.3.2'
     compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.34'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '1.4.2.RELEASE'

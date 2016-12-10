@@ -1,2 +1,3 @@
 rootProject.name = 'lrpe-server'
-
+include ':lrpe-shared'
+project(':lrpe-shared').projectDir = new File(settingsDir, '../lrpe-shared')

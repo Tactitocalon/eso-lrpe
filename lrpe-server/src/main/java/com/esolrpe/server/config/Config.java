@@ -1,4 +1,4 @@
-package com.esolrpe.config;
+package com.esolrpe.server.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;

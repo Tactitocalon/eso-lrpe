@@ -4,3 +4,6 @@
 /lrpe-server/config/application.yml
 /lrpe-client/.gradle
 /lrpe-client/.idea
+/lrpe-shared/.gradle
+/lrpe-client/build
+/lrpe-shared/build

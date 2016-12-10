@@ -1,6 +1,6 @@
-package com.esolrpe.profiles;
+package com.esolrpe.shared.profiles;
 
-import com.esolrpe.auth.AuthenticationDetails;
+import com.esolrpe.shared.auth.AuthenticationDetails;
 
 public class ContextDeleteProfile {
     private AuthenticationDetails authenticationDetails;

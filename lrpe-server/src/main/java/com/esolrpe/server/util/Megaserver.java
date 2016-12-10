@@ -1,4 +1,4 @@
-package com.esolrpe.util;
+package com.esolrpe.server.util;
 
 import java.util.stream.Stream;
 

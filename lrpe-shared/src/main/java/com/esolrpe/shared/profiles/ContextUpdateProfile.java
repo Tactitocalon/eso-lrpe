@@ -1,12 +1,13 @@
-package com.esolrpe.profiles;
+package com.esolrpe.shared.profiles;
 
-public class ProfileData {
+import com.esolrpe.shared.auth.AuthenticationDetails;
+
+public class ContextUpdateProfile {
+    private AuthenticationDetails authenticationDetails;
     private String characterName;
     private String displayName;
     private String profileText;
     private String profileUrl;
-    private boolean inactive;
-    private boolean deleted;
 
     public String getCharacterName() {
         return characterName;
@@ -40,19 +41,11 @@ public class ProfileData {
         this.profileUrl = profileUrl;
     }
 
-    public boolean isInactive() {
-        return inactive;
+    public AuthenticationDetails getAuthenticationDetails() {
+        return authenticationDetails;
     }
 
-    public void setInactive(boolean inactive) {
-        this.inactive = inactive;
-    }
-
-    public boolean isDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
+    public void setAuthenticationDetails(AuthenticationDetails authenticationDetails) {
+        this.authenticationDetails = authenticationDetails;
     }
 }

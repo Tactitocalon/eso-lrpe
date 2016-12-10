@@ -1,6 +1,4 @@
-package com.esolrpe.auth;
-
-import org.springframework.jdbc.core.JdbcTemplate;
+package com.esolrpe.shared.auth;
 
 public class AuthenticationDetails {
     private String username;
@@ -20,13 +18,5 @@ public class AuthenticationDetails {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public void authenticate(JdbcTemplate jdbcTemplate) throws AuthenticationException {
-
-    }
-
-    public static class AuthenticationException extends RuntimeException {
-
     }
 }

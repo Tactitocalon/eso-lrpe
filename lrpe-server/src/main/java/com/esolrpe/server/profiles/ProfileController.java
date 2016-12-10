@@ -1,8 +1,14 @@
-package com.esolrpe.profiles;
+package com.esolrpe.server.profiles;
 
-import com.esolrpe.Application;
-import com.esolrpe.auth.AuthenticationDetails;
-import com.esolrpe.util.Megaserver;
+import com.esolrpe.server.Application;
+import com.esolrpe.server.auth.AuthenticationUtils;
+import com.esolrpe.shared.auth.AuthenticationDetails;
+import com.esolrpe.shared.profiles.ContextDeleteProfile;
+import com.esolrpe.shared.profiles.ContextUpdateProfile;
+import com.esolrpe.shared.profiles.ProfileAPI;
+import com.esolrpe.shared.profiles.ProfileData;
+import com.esolrpe.shared.profiles.ProfileDatabaseUpdate;
+import com.esolrpe.server.util.Megaserver;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -20,7 +26,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/profiles")
-public class ProfileController {
+public class ProfileController implements ProfileAPI {
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -72,28 +78,30 @@ public class ProfileController {
         return databaseUpdate;
     }
 
+    @Override
     @RequestMapping(value = "{megaserverCode}/{characterName}", method = RequestMethod.PUT)
     public void updateProfile(@PathVariable String megaserverCode,
                               @PathVariable String characterName,
                               @RequestBody ContextUpdateProfile profileData) {
-        profileData.getAuthenticationDetails().authenticate(jdbcTemplate);
+        AuthenticationUtils.authenticate(profileData.getAuthenticationDetails(), jdbcTemplate);
 
         // TODO update
     }
 
+    @Override
     @RequestMapping(value = "{megaserverCode}/{characterName}/delete", method = RequestMethod.POST)
     public void deleteProfile(@PathVariable String megaserverCode,
                               @RequestBody ContextDeleteProfile profileData) {
-        profileData.getAuthenticationDetails().authenticate(jdbcTemplate);
+        AuthenticationUtils.authenticate(profileData.getAuthenticationDetails(), jdbcTemplate);
 
         // TODO delete
     }
 
+    @Override
     @RequestMapping(value = "{megaserverCode}/accountprofiles", method = RequestMethod.GET)
     public void getProfilesForAccount(@PathVariable String megaserverCode,
                                       @RequestBody AuthenticationDetails authenticationDetails) {
-        authenticationDetails.authenticate(jdbcTemplate);
-
+        AuthenticationUtils.authenticate(authenticationDetails, jdbcTemplate);
         // TODO get profiles for account
     }
 }

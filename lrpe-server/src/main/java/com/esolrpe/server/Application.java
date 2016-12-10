@@ -1,6 +1,6 @@
-package com.esolrpe;
+package com.esolrpe.server;
 
-import com.esolrpe.config.Config;
+import com.esolrpe.server.config.Config;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

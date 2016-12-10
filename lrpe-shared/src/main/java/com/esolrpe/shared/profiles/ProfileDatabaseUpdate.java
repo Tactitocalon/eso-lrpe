@@ -1,4 +1,4 @@
-package com.esolrpe.profiles;
+package com.esolrpe.shared.profiles;
 
 import java.util.List;
 

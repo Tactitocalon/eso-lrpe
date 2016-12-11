@@ -91,7 +91,7 @@ public class ProfileController implements ProfileAPI {
     @Override
     @RequestMapping(value = "{megaserverCode}/{characterName}/delete", method = RequestMethod.POST)
     public void deleteProfile(@PathVariable String megaserverCode,
-                              @RequestBody ContextDeleteProfile profileData) {
+                              ContextDeleteProfile profileData) {
         AuthenticationUtils.authenticate(profileData.getAuthenticationDetails(), jdbcTemplate);
 
         // TODO delete
@@ -99,9 +99,25 @@ public class ProfileController implements ProfileAPI {
 
     @Override
     @RequestMapping(value = "{megaserverCode}/accountprofiles", method = RequestMethod.GET)
-    public void getProfilesForAccount(@PathVariable String megaserverCode,
-                                      @RequestBody AuthenticationDetails authenticationDetails) {
+    public List<ProfileData> getProfilesForAccount(@PathVariable String megaserverCode,
+                                                   AuthenticationDetails authenticationDetails) {
         AuthenticationUtils.authenticate(authenticationDetails, jdbcTemplate);
-        // TODO get profiles for account
+
+        Megaserver megaserver = Megaserver.fromCode(StringUtils.upperCase(megaserverCode));
+        if (megaserver == null) {
+            throw new RuntimeException("Unknown megaserver '" + megaserverCode + "'.");
+        }
+
+        List<ProfileData> profileData = jdbcTemplate.query(
+                "SELECT profiles.* FROM profiles " +
+                        "INNER JOIN accounts ON profiles.parentAccountId = accounts.accountId " +
+                        "WHERE profiles.megaserver = ? " +
+                        "AND profiles.deleted = 0 " +
+                        "AND accounts.username = ?;",
+                new Object[] { megaserver.getDatabaseCode(), authenticationDetails.getUsername() },
+                new BeanPropertyRowMapper<>(ProfileData.class)
+        );
+
+        return profileData;
     }
 }

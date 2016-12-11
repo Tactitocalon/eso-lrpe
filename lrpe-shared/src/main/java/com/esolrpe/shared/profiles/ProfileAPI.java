@@ -2,6 +2,8 @@ package com.esolrpe.shared.profiles;
 
 import com.esolrpe.shared.auth.AuthenticationDetails;
 
+import java.util.List;
+
 public interface ProfileAPI {
     ProfileDatabaseUpdate syncProfiles(
             String megaserverCode,
@@ -13,5 +15,5 @@ public interface ProfileAPI {
 
     void deleteProfile(String megaserverCode, ContextDeleteProfile profileData);
 
-    void getProfilesForAccount(String megaserverCode, AuthenticationDetails authenticationDetails);
+    List<ProfileData> getProfilesForAccount(String megaserverCode, AuthenticationDetails authenticationDetails);
 }

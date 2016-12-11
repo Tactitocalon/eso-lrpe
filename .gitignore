@@ -7,3 +7,4 @@
 /lrpe-shared/.gradle
 /lrpe-client/build
 /lrpe-shared/build
+/lrpe-client/lrpe-config.json

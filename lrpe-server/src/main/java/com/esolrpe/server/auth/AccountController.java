@@ -22,7 +22,7 @@ public class AccountController implements AccountAPI {
     @Override
     @RequestMapping(value="authenticate", method = RequestMethod.GET)
     public void authenticate(@RequestParam AuthenticationDetails authenticationDetails) {
-        AuthenticationUtils.authenticate(authenticationDetails, jdbcTemplate);
+        // AuthenticationUtils.authenticate(authenticationDetails, jdbcTemplate);
     }
 
     @Override
@@ -35,7 +35,7 @@ public class AccountController implements AccountAPI {
     @RequestMapping(value = "changepassword", method = RequestMethod.PUT)
     public void changePassword(@RequestParam AuthenticationDetails authenticationDetails,
                                @RequestParam String newPassword) {
-        AuthenticationUtils.authenticate(authenticationDetails, jdbcTemplate);
+        // AuthenticationUtils.authenticate(authenticationDetails, jdbcTemplate);
 
         // TODO update
     }

@@ -2,13 +2,12 @@ package com.esolrpe.server.profiles;
 
 import com.esolrpe.server.Application;
 import com.esolrpe.server.auth.AuthenticationUtils;
-import com.esolrpe.shared.auth.AuthenticationDetails;
+import com.esolrpe.server.util.Megaserver;
 import com.esolrpe.shared.profiles.ContextDeleteProfile;
 import com.esolrpe.shared.profiles.ContextUpdateProfile;
 import com.esolrpe.shared.profiles.ProfileAPI;
 import com.esolrpe.shared.profiles.ProfileData;
 import com.esolrpe.shared.profiles.ProfileDatabaseUpdate;
-import com.esolrpe.server.util.Megaserver;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -83,7 +82,6 @@ public class ProfileController implements ProfileAPI {
     public void updateProfile(@PathVariable String megaserverCode,
                               @PathVariable String characterName,
                               @RequestBody ContextUpdateProfile profileData) {
-        AuthenticationUtils.authenticate(profileData.getAuthenticationDetails(), jdbcTemplate);
 
         // TODO update
     }
@@ -92,32 +90,28 @@ public class ProfileController implements ProfileAPI {
     @RequestMapping(value = "{megaserverCode}/{characterName}/delete", method = RequestMethod.POST)
     public void deleteProfile(@PathVariable String megaserverCode,
                               ContextDeleteProfile profileData) {
-        AuthenticationUtils.authenticate(profileData.getAuthenticationDetails(), jdbcTemplate);
 
         // TODO delete
     }
 
     @Override
     @RequestMapping(value = "{megaserverCode}/accountprofiles", method = RequestMethod.GET)
-    public List<ProfileData> getProfilesForAccount(@PathVariable String megaserverCode,
-                                                   AuthenticationDetails authenticationDetails) {
-        AuthenticationUtils.authenticate(authenticationDetails, jdbcTemplate);
+    public List<ProfileData> getProfilesForAccount(@PathVariable String megaserverCode) {
+        String username = AuthenticationUtils.getUserDetails().getUsername();
 
         Megaserver megaserver = Megaserver.fromCode(StringUtils.upperCase(megaserverCode));
         if (megaserver == null) {
             throw new RuntimeException("Unknown megaserver '" + megaserverCode + "'.");
         }
 
-        List<ProfileData> profileData = jdbcTemplate.query(
+        return jdbcTemplate.query(
                 "SELECT profiles.* FROM profiles " +
                         "INNER JOIN accounts ON profiles.parentAccountId = accounts.accountId " +
                         "WHERE profiles.megaserver = ? " +
                         "AND profiles.deleted = 0 " +
                         "AND accounts.username = ?;",
-                new Object[] { megaserver.getDatabaseCode(), authenticationDetails.getUsername() },
+                new Object[] { megaserver.getDatabaseCode(), username },
                 new BeanPropertyRowMapper<>(ProfileData.class)
         );
-
-        return profileData;
     }
 }

@@ -1,10 +1,12 @@
 package com.esolrpe.server.auth;
 
-import com.esolrpe.shared.auth.AuthenticationDetails;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 
 public class AuthenticationUtils {
-    public static void authenticate(AuthenticationDetails authenticationDetails, JdbcTemplate jdbcTemplate) {
-
+    public static UserDetails getUserDetails() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return (UserDetails) auth.getPrincipal();
     }
 }

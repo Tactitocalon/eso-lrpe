@@ -63,7 +63,7 @@ public class MainForm extends JFrame {
         AuthenticationDetails authDetails = new AuthenticationDetails();
         authDetails.setUsername("TestUser");
 
-        profiles = new ProfileService().getProfilesForAccount("NA", authDetails);
+        profiles = new ProfileService().getProfilesForAccount("NA");
 
         String[] characterNames = profiles.stream()
                 .map(ProfileData::getCharacterName)

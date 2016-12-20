@@ -1,7 +1,5 @@
 package com.esolrpe.shared.profiles;
 
-import com.esolrpe.shared.auth.AuthenticationDetails;
-
 import java.util.List;
 
 public interface ProfileAPI {
@@ -15,5 +13,5 @@ public interface ProfileAPI {
 
     void deleteProfile(String megaserverCode, ContextDeleteProfile profileData);
 
-    List<ProfileData> getProfilesForAccount(String megaserverCode, AuthenticationDetails authenticationDetails);
+    List<ProfileData> getProfilesForAccount(String megaserverCode);
 }

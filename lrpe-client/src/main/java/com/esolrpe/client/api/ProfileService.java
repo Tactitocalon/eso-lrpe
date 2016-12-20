@@ -1,7 +1,6 @@
 package com.esolrpe.client.api;
 
 import com.esolrpe.client.config.Config;
-import com.esolrpe.shared.auth.AuthenticationDetails;
 import com.esolrpe.shared.profiles.ContextDeleteProfile;
 import com.esolrpe.shared.profiles.ContextUpdateProfile;
 import com.esolrpe.shared.profiles.ProfileAPI;
@@ -48,12 +47,10 @@ public class ProfileService implements ProfileAPI {
     }
 
     @Override
-    public List<ProfileData> getProfilesForAccount(String megaserverCode, AuthenticationDetails authenticationDetails) {
+    public List<ProfileData> getProfilesForAccount(String megaserverCode) {
         try {
             HttpUrl url = HttpUrl.parse(Config.getInstance().getServerUri() + "profiles/na/accountprofiles")
                     .newBuilder()
-                    .addQueryParameter("username", authenticationDetails.getUsername())
-                    .addQueryParameter("password", authenticationDetails.getPassword())
                     .build();
 
             Request request = new Request.Builder()

@@ -3,7 +3,6 @@ package com.esolrpe.shared.profiles;
 import com.esolrpe.shared.auth.AuthenticationDetails;
 
 public class ContextUpdateProfile {
-    private AuthenticationDetails authenticationDetails;
     private String characterName;
     private String displayName;
     private String profileText;
@@ -39,13 +38,5 @@ public class ContextUpdateProfile {
 
     public void setProfileUrl(String profileUrl) {
         this.profileUrl = profileUrl;
-    }
-
-    public AuthenticationDetails getAuthenticationDetails() {
-        return authenticationDetails;
-    }
-
-    public void setAuthenticationDetails(AuthenticationDetails authenticationDetails) {
-        this.authenticationDetails = authenticationDetails;
     }
 }

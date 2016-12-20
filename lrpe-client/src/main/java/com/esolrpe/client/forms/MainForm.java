@@ -6,22 +6,19 @@ import com.esolrpe.shared.auth.AuthenticationDetails;
 import com.esolrpe.shared.profiles.ProfileData;
 import net.miginfocom.swing.MigLayout;
 
-import javax.swing.DefaultListCellRenderer;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
-import javax.swing.border.BevelBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.filechooser.FileSystemView;
-import java.awt.Color;
-import java.awt.Component;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
+import java.util.stream.Collectors;
 
 public class MainForm extends JFrame {
     private final JList<String> lstProfiles;
@@ -35,6 +32,7 @@ public class MainForm extends JFrame {
         waitLatch.await();
     }
 
+    private List<ProfileData> profiles;
 
     private MainForm(CountDownLatch waitLatch) {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -48,7 +46,6 @@ public class MainForm extends JFrame {
         lstProfiles.setLayoutOrientation(JList.VERTICAL);
         lstProfiles.setVisibleRowCount(12);
         lstProfiles.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-        lstProfiles.setListData(new String[] { "Talen-Chath", "Naruto the Ninja Cat" });
 
         JScrollPane pnlProfiles = new JScrollPane(lstProfiles);
         pnlProfiles.setBorder(new TitledBorder("Profiles"));
@@ -65,9 +62,20 @@ public class MainForm extends JFrame {
     private void refreshProfiles() {
         AuthenticationDetails authDetails = new AuthenticationDetails();
         authDetails.setUsername("TestUser");
-        List<ProfileData> x = new ProfileService().getProfilesForAccount("NA", authDetails);
 
-        lstProfiles.setSelectedIndex(0);
+        profiles = new ProfileService().getProfilesForAccount("NA", authDetails);
+
+        String[] characterNames = profiles.stream()
+                .map(ProfileData::getCharacterName)
+                .collect(Collectors.toList())
+                .toArray(new String[profiles.size()]);
+        lstProfiles.setListData(characterNames);
+        if (characterNames.length > 0) {
+            lstProfiles.setSelectedIndex(0);
+        }
+
+        EditProfileDialog dialog = new EditProfileDialog(this, profiles.get(0));
+        dialog.setVisible(true);
     }
 
     private File computeDefaultAddonLocation() {

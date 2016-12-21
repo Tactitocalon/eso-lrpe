@@ -2,10 +2,6 @@ package com.esolrpe.client.api;
 
 import com.esolrpe.shared.auth.AccountAPI;
 import com.esolrpe.shared.auth.AuthenticationDetails;
-import okhttp3.Request;
-import okhttp3.Response;
-
-import java.io.IOException;
 
 public class AccountService implements AccountAPI {
     @Override
@@ -14,12 +10,12 @@ public class AccountService implements AccountAPI {
     }
 
     @Override
-    public void register(AuthenticationDetails authenticationDetails) {
+    public void register(String username, String password) {
 
     }
 
     @Override
-    public void changePassword(AuthenticationDetails authenticationDetails, String newPassword) {
+    public void changePassword(String newPassword) {
 
     }
 }

@@ -82,6 +82,7 @@ public class ProfileController implements ProfileAPI {
     public void updateProfile(@PathVariable String megaserverCode,
                               @PathVariable String characterName,
                               @RequestBody ContextUpdateProfile profileData) {
+        // Verify we are not disallowed to update this profile.
 
         // TODO update
     }
@@ -90,6 +91,7 @@ public class ProfileController implements ProfileAPI {
     @RequestMapping(value = "{megaserverCode}/{characterName}/delete", method = RequestMethod.POST)
     public void deleteProfile(@PathVariable String megaserverCode,
                               ContextDeleteProfile profileData) {
+        // Verify that we own this profile.
 
         // TODO delete
     }

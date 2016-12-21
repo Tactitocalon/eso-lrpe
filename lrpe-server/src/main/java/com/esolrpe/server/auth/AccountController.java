@@ -27,14 +27,25 @@ public class AccountController implements AccountAPI {
 
     @Override
     @RequestMapping(value="register", method = RequestMethod.POST)
-    public void register(@RequestParam AuthenticationDetails authenticationDetails) {
+    public void register(@RequestParam String username, String password) {
+        int existingAccount = jdbcTemplate.queryForObject(
+                "SELECT count(1) FROM accounts WHERE username = ?",
+                new Object[] { username },
+                Integer.class
+        );
+        if (existingAccount != 0) {
+            throw new RuntimeException("An account with the username \"" + username + "\" already exists.");
+        }
 
+        String encodedPassword = AuthenticationUtils.encodePlaintextPassword(password);
+        jdbcTemplate.update("INSERT INTO accounts (username, password) VALUES (?, ?)",
+                new Object[] {username, encodedPassword}
+        );
     }
 
     @Override
     @RequestMapping(value = "changepassword", method = RequestMethod.PUT)
-    public void changePassword(@RequestParam AuthenticationDetails authenticationDetails,
-                               @RequestParam String newPassword) {
+    public void changePassword(@RequestParam String newPassword) {
         // AuthenticationUtils.authenticate(authenticationDetails, jdbcTemplate);
 
         // TODO update

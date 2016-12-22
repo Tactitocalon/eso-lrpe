@@ -9,6 +9,7 @@ import com.esolrpe.shared.profiles.ProfileDatabaseUpdate;
 import com.google.gson.Gson;
 import okhttp3.HttpUrl;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 import java.io.IOException;
@@ -38,7 +39,30 @@ public class ProfileService implements ProfileAPI {
 
     @Override
     public void updateProfile(String megaserverCode, String characterName, ContextUpdateProfile profileData) {
+        HttpUrl url = HttpUrl.parse(Config.getInstance().getServerUri())
+                .newBuilder()
+                .addEncodedPathSegment("profiles")
+                .addEncodedPathSegment(Config.getInstance().getMegaserver())
+                .addEncodedPathSegment(characterName)
+                .build();
 
+        Request request = new Request.Builder()
+                .put(RequestBody.create(HttpClient.JSON, new Gson().toJson(profileData)))
+                .url(url)
+                .build();
+
+        Response response = null;
+        try {
+            response = HttpClient.getInstance()
+                    .newCall(request)
+                    .execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        if (!response.isSuccessful()) {
+            throw new RuntimeException("updateProfile failed");
+        }
     }
 
     @Override
@@ -63,7 +87,7 @@ public class ProfileService implements ProfileAPI {
                     .execute();
 
             if (!response.isSuccessful()) {
-                throw new RuntimeException("syncProfiles failed");
+                throw new RuntimeException("getProfilesForAccount failed");
             }
 
             return Arrays.asList(new Gson().fromJson(response.body().string(), ProfileData[].class));

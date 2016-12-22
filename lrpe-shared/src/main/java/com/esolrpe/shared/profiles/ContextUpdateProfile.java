@@ -3,18 +3,9 @@ package com.esolrpe.shared.profiles;
 import com.esolrpe.shared.auth.AuthenticationDetails;
 
 public class ContextUpdateProfile {
-    private String characterName;
     private String displayName;
     private String profileText;
     private String profileUrl;
-
-    public String getCharacterName() {
-        return characterName;
-    }
-
-    public void setCharacterName(String characterName) {
-        this.characterName = characterName;
-    }
 
     public String getDisplayName() {
         return displayName;

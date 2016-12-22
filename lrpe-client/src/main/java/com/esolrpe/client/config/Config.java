@@ -49,6 +49,8 @@ public class Config {
     private String esoAddonLocation;
     private String lrpeAddonName;
 
+    private String megaserver;
+
     public String getServerUri() {
         return serverUri;
     }
@@ -111,5 +113,13 @@ public class Config {
 
     public void setLrpeAddonName(String lrpeAddonName) {
         this.lrpeAddonName = lrpeAddonName;
+    }
+
+    public String getMegaserver() {
+        return megaserver;
+    }
+
+    public void setMegaserver(String megaserver) {
+        this.megaserver = megaserver;
     }
 }

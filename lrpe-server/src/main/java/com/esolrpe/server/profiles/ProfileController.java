@@ -83,7 +83,7 @@ public class ProfileController implements ProfileAPI {
                               @PathVariable String characterName,
                               @RequestBody ContextUpdateProfile profileData) {
         // Verify we are not disallowed to update this profile.
-
+        System.out.println("hi");
         // TODO update
     }
 

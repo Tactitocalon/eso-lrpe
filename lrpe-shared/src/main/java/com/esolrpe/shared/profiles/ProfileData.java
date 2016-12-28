@@ -1,12 +1,30 @@
 package com.esolrpe.shared.profiles;
 
 public class ProfileData {
+    private Long profileId;
+    private Long parentAccountId;
     private String characterName;
     private String displayName;
     private String profileText;
     private String profileUrl;
     private boolean inactive;
     private boolean deleted;
+
+    public Long getProfileId() {
+        return profileId;
+    }
+
+    public void setProfileId(Long profileId) {
+        this.profileId = profileId;
+    }
+
+    public Long getParentAccountId() {
+        return parentAccountId;
+    }
+
+    public void setParentAccountId(Long parentAccountId) {
+        this.parentAccountId = parentAccountId;
+    }
 
     public String getCharacterName() {
         return characterName;

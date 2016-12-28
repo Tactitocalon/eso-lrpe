@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @RestController
@@ -74,6 +75,8 @@ public class ProfileController implements ProfileAPI {
         );
         databaseUpdate.setProfiles(profileData);
 
+        // TODO: Finally, update the current user account "lastSeen" value.
+
         return databaseUpdate;
     }
 
@@ -82,9 +85,36 @@ public class ProfileController implements ProfileAPI {
     public void updateProfile(@PathVariable String megaserverCode,
                               @PathVariable String characterName,
                               @RequestBody ContextUpdateProfile profileData) {
+        Megaserver megaserver = Megaserver.fromCode(StringUtils.upperCase(megaserverCode));
+        if (megaserver == null) {
+            throw new RuntimeException("Unknown megaserver '" + megaserverCode + "'.");
+        }
+
         // Verify we are not disallowed to update this profile.
-        System.out.println("hi");
-        // TODO update
+        List<ProfileData> currentProfileList = jdbcTemplate.query(
+                "SELECT * FROM profiles WHERE profiles.megaserver = ? AND characterName = ?",
+                new Object[] { megaserver.getDatabaseCode(), characterName },
+                new BeanPropertyRowMapper<>(ProfileData.class)
+        );
+        Optional<ProfileData> currentProfile = currentProfileList.stream().findFirst();
+
+        Long accountId = AuthenticationUtils.getCurrentAccountId(jdbcTemplate);
+        if (currentProfile.isPresent() && !currentProfile.get().isDeleted()) {
+            if (!Objects.equals(currentProfile.get().getParentAccountId(), accountId)) {
+                throw new RuntimeException("User account " + accountId + " does not own this profile!");
+            }
+        }
+
+        jdbcTemplate.update("REPLACE INTO profiles (parentAccountId, characterName, megaserver, " +
+                        "displayName, profileText, profileUrl, inactive, deleted) " +
+                        "VALUES (?, ?, ?, ?, ?, ?, 0, 0)",
+                accountId,
+                characterName,
+                megaserver.getDatabaseCode(),
+                profileData.getDisplayName(),
+                profileData.getProfileText(),
+                profileData.getProfileUrl()
+        );
     }
 
     @Override
@@ -99,20 +129,19 @@ public class ProfileController implements ProfileAPI {
     @Override
     @RequestMapping(value = "{megaserverCode}/accountprofiles", method = RequestMethod.GET)
     public List<ProfileData> getProfilesForAccount(@PathVariable String megaserverCode) {
-        String username = AuthenticationUtils.getUserDetails().getUsername();
-
         Megaserver megaserver = Megaserver.fromCode(StringUtils.upperCase(megaserverCode));
         if (megaserver == null) {
             throw new RuntimeException("Unknown megaserver '" + megaserverCode + "'.");
         }
 
+        Long accountId = AuthenticationUtils.getCurrentAccountId(jdbcTemplate);
+
         return jdbcTemplate.query(
                 "SELECT profiles.* FROM profiles " +
-                        "INNER JOIN accounts ON profiles.parentAccountId = accounts.accountId " +
-                        "WHERE profiles.megaserver = ? " +
-                        "AND profiles.deleted = 0 " +
-                        "AND accounts.username = ?;",
-                new Object[] { megaserver.getDatabaseCode(), username },
+                        "WHERE megaserver = ? " +
+                        "AND deleted = 0 " +
+                        "AND parentAccountId = ?;",
+                new Object[] { megaserver.getDatabaseCode(), accountId },
                 new BeanPropertyRowMapper<>(ProfileData.class)
         );
     }

@@ -31,7 +31,7 @@ public class ConfigureAddonLocationForm extends JFrame {
         setTitle(Application.TITLE);
         setResizable(false);
 
-        setLayout(new MigLayout("", "[500px][]", "[][][]32px[]"));
+        setLayout(new MigLayout("", "[500px][]", "[][][]8px[]"));
 
         add(new JLabel("Location of ESO AddOns folder:"), "cell 0 0, spanx");
         add(new JLabel("eg. \"C:\\Users\\YourWindowsUsername\\Documents\\Elder Scrolls Online\\live\\AddOns\""),

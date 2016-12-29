@@ -51,7 +51,7 @@ public class ProfileService implements ProfileAPI {
                 .url(url)
                 .build();
 
-        Response response = null;
+        Response response;
         try {
             response = HttpClient.getInstance()
                     .newCall(request)

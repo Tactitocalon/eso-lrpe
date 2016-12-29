@@ -1,7 +1,6 @@
 package com.esolrpe.server.auth;
 
 import com.esolrpe.shared.auth.AccountAPI;
-import com.esolrpe.shared.auth.AuthenticationDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,9 +20,7 @@ public class AccountController implements AccountAPI {
 
     @Override
     @RequestMapping(value="authenticate", method = RequestMethod.GET)
-    public void authenticate(@RequestParam AuthenticationDetails authenticationDetails) {
-        // AuthenticationUtils.authenticate(authenticationDetails, jdbcTemplate);
-    }
+    public void authenticate() {}
 
     @Override
     @RequestMapping(value="register", method = RequestMethod.POST)

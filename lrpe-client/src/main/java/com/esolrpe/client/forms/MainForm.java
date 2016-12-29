@@ -98,7 +98,9 @@ public class MainForm extends JFrame {
             int result = JOptionPane.showConfirmDialog(MainForm.this,
                     "Are you sure you want to delete the profile for \"" +
                             profile.getCharacterName() +
-                            "\"?");
+                            "\"?",
+                            "Confirm Delete Profile",
+                            JOptionPane.YES_NO_OPTION);
 
             if (result == JOptionPane.YES_OPTION) {
                 ContextDeleteProfile deleteProfile = new ContextDeleteProfile();

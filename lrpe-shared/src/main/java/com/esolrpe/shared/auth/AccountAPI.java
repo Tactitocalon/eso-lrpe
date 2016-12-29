@@ -1,7 +1,7 @@
 package com.esolrpe.shared.auth;
 
 public interface AccountAPI {
-    void authenticate(AuthenticationDetails authenticationDetails);
+    void authenticate();
 
     void register(String username, String password);
 

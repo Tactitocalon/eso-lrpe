@@ -1,8 +1,10 @@
     package com.esolrpe.client;
 
+    import com.esolrpe.client.api.VersionService;
     import com.esolrpe.client.config.Config;
     import com.esolrpe.client.forms.ConfigureAddonLocationForm;
     import com.esolrpe.client.forms.MainForm;
+    import com.esolrpe.shared.version.VersionDetails;
 
     import javax.swing.SwingUtilities;
 
@@ -13,16 +15,27 @@
             run();
         }
 
-        public static void run() {
-            assert(!SwingUtilities.isEventDispatchThread());
+        private static void run() {
             try {
+                assert(!SwingUtilities.isEventDispatchThread());
+                ExceptionHandler.setupGlobalExceptionHandling();
                 Config config = Config.getInstance();
 
+                doVersionCheck();
                 ConfigureAddonLocationForm.display();
 
                 MainForm.display();
             } catch (Exception e) {
-                e.printStackTrace();
+                ExceptionHandler.handleException(e);
+            }
+        }
+
+        private static void doVersionCheck() {
+            VersionDetails serverVersion = new VersionService().getCurrentVersion();
+            VersionDetails currentVersion = VersionDetails.createCurrentVersionDetails();
+
+            if (serverVersion.getVersion() > currentVersion.getVersion()) {
+                throw new RuntimeException(serverVersion.getUpdateMessage());
             }
         }
     }

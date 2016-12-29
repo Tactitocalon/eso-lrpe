@@ -33,6 +33,7 @@ public class AuthenticationConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests().antMatchers("/accounts/register").anonymous();
+        http.authorizeRequests().antMatchers("/version").anonymous();
         http.authorizeRequests().anyRequest().fullyAuthenticated();
         http.httpBasic();
         http.csrf().disable();

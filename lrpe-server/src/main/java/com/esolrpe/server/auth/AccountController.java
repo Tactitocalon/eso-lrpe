@@ -24,7 +24,7 @@ public class AccountController implements AccountAPI {
 
     @Override
     @RequestMapping(value="register", method = RequestMethod.POST)
-    public void register(@RequestParam String username, String password) {
+    public void register(@RequestParam String username, @RequestParam String password) {
         int existingAccount = jdbcTemplate.queryForObject(
                 "SELECT count(1) FROM accounts WHERE username = ?",
                 new Object[] { username },

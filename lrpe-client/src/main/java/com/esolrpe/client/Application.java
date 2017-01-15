@@ -1,8 +1,11 @@
     package com.esolrpe.client;
 
+    import com.esolrpe.client.api.AccountService;
+    import com.esolrpe.client.api.AuthenticationException;
     import com.esolrpe.client.api.VersionService;
     import com.esolrpe.client.config.Config;
     import com.esolrpe.client.forms.ConfigureAddonLocationForm;
+    import com.esolrpe.client.forms.ConfigureCredentialsForm;
     import com.esolrpe.client.forms.MainForm;
     import com.esolrpe.shared.version.VersionDetails;
 
@@ -22,7 +25,19 @@
                 Config config = Config.getInstance();
 
                 doVersionCheck();
-                ConfigureAddonLocationForm.display();
+                if (config.getEsoAddonLocation() == null) {
+                    ConfigureAddonLocationForm.display();
+                }
+
+                // Attempt authentication
+                boolean isAuthenticated = false;
+                try {
+                    new AccountService().authenticate();
+                    isAuthenticated = true;
+                } catch (AuthenticationException ignored) {}
+                if (!isAuthenticated) {
+                    ConfigureCredentialsForm.display();
+                }
 
                 MainForm.display();
             } catch (Exception e) {

@@ -27,7 +27,7 @@ public class HttpClient {
             @Override
             public Request authenticate(Route route, Response response) throws IOException {
                 if (attempts++ > 0) {
-                    throw new RuntimeException("Invalid login: " + response.message());
+                    throw new AuthenticationException();
                 }
 
                 String credential = Credentials.basic(Config.getInstance().getLrpeUsername(),

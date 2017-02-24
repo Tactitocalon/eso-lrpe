@@ -1,6 +1,8 @@
 package com.esolrpe.server.auth;
 
 import com.esolrpe.shared.auth.AccountAPI;
+import com.esolrpe.shared.auth.AccountAlreadyExistsException;
+import com.esolrpe.shared.exception.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +33,7 @@ public class AccountController implements AccountAPI {
                 Integer.class
         );
         if (existingAccount != 0) {
-            throw new RuntimeException("An account with the username \"" + username + "\" already exists.");
+            throw new AccountAlreadyExistsException("An account with the username \"" + username + "\" already exists.");
         }
 
         String encodedPassword = AuthenticationUtils.encodePlaintextPassword(password);

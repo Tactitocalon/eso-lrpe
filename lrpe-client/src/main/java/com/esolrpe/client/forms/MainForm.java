@@ -5,6 +5,8 @@ import com.esolrpe.client.api.ProfileService;
 import com.esolrpe.client.config.Config;
 import com.esolrpe.shared.profiles.ContextDeleteProfile;
 import com.esolrpe.shared.profiles.ProfileData;
+import com.esolrpe.shared.profiles.ProfileDatabase;
+import com.esolrpe.shared.profiles.ProfileDatabaseUpdate;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.JButton;
@@ -18,6 +20,8 @@ import javax.swing.WindowConstants;
 import javax.swing.border.TitledBorder;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
@@ -42,7 +46,7 @@ public class MainForm extends JFrame {
         setTitle(Application.TITLE);
         setResizable(false);
 
-        setLayout(new MigLayout("", "[300px][]", "[][][][]32px[]"));
+        setLayout(new MigLayout("", "[300px][]", "[][][][][]"));
 
         lstProfiles = new JList<>();
         lstProfiles.setOpaque(false);
@@ -61,6 +65,10 @@ public class MainForm extends JFrame {
         add(btnEditProfile, "cell 1 1, growx");
         JButton btnDeleteProfile = new JButton("Delete Profile");
         add(btnDeleteProfile, "cell 1 2, growx");
+        btnDeleteProfile.setEnabled(false); // TODO
+
+        JButton btnDownloadProfiles = new JButton("Download Profiles");
+        add(btnDownloadProfiles, "cell 0 4, growx, spanx 2");
 
         btnNewProfile.addActionListener(a -> {
             EditProfileDialog dialog = new EditProfileDialog(MainForm.this, null);
@@ -79,6 +87,31 @@ public class MainForm extends JFrame {
             dialog.setVisible(true);
 
             refreshProfiles();
+        });
+
+        btnDownloadProfiles.addActionListener(e -> {
+            ProfileDatabaseUpdate profileDatabaseUpdate = new ProfileService().syncProfiles(Config.getInstance().getMegaserver(), 0L);
+
+            // TODO: need to read an existing profile database or w/e
+            ProfileDatabase profileDatabase = new ProfileDatabase();
+            profileDatabase.setApplicationVersion(profileDatabaseUpdate.getApplicationVersion());
+            profileDatabase.setDatabaseVersion(profileDatabaseUpdate.getDatabaseVersion());
+            profileDatabase.setTotalProfileCount(profileDatabaseUpdate.getTotalProfileCount());
+            profileDatabase.setProfiles(profileDatabaseUpdate.getProfiles());
+
+            File database = new File(Config.getInstance().getEsoAddonLocation(), "LitheRPEssentials/data/LitheDatabase.lua");
+            database.delete();
+
+            try {
+                profileDatabase.exportToLuaDatabase(database);
+            } catch (IOException e1) {
+                throw new RuntimeException(e1);
+            }
+
+            JOptionPane.showMessageDialog(null,
+                    "Download and installation of profiles complete!",
+                    "Success", JOptionPane.INFORMATION_MESSAGE);
+            MainForm.this.dispose();
         });
 
         lstProfiles.addListSelectionListener(e -> {
@@ -135,7 +168,7 @@ public class MainForm extends JFrame {
     }
 
     private void refreshProfiles() {
-        profiles = new ProfileService().getProfilesForAccount("NA");
+        profiles = new ProfileService().getProfilesForAccount(Config.getInstance().getMegaserver());
 
         // TODO: reselect the profile (by NAME, not by index) that we had selected before a refresh
 

@@ -1,6 +1,8 @@
 package com.esolrpe.client.api;
 
 import com.esolrpe.client.config.Config;
+import com.esolrpe.shared.exception.ServiceException;
+import com.google.gson.Gson;
 import okhttp3.Authenticator;
 import okhttp3.Credentials;
 import okhttp3.MediaType;
@@ -36,5 +38,18 @@ public class HttpClient {
             }
         });
         return builder.build();
+    }
+
+    public static void resolveExceptionResponse(Response response) throws ServiceException {
+        Gson gson = new Gson();
+        try {
+            ServiceException serviceException = gson.fromJson(response.body().string(), ServiceException.class);
+            if (serviceException.getException() != null && !serviceException.getException().isEmpty()) {
+                throw serviceException;
+            }
+            throw new RuntimeException("An unknown error occurred: " + response.body().string());
+        } catch (IOException e) {
+            throw new RuntimeException("Error in resolving exception response", e);
+        }
     }
 }

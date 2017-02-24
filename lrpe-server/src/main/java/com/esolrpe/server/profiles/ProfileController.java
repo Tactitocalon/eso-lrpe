@@ -101,7 +101,7 @@ public class ProfileController implements ProfileAPI {
         Long accountId = AuthenticationUtils.getCurrentAccountId(jdbcTemplate);
         if (currentProfile.isPresent() && !currentProfile.get().isDeleted()) {
             if (!Objects.equals(currentProfile.get().getParentAccountId(), accountId)) {
-                throw new RuntimeException("User account " + accountId + " does not own this profile!");
+                throw new RuntimeException("A profile already exists using this character name that belongs to someone else's account.");
             }
         }
 

@@ -1,6 +1,5 @@
--- TODO: move this file to a "template" folder or something. this should be generated eventually.
--- also: need to test with 400k entries.
 LitheDatabase = {
+	lastUpdateTimestamp = 123456,
 	["Talen-Chath"] = {
 		nm = "Talen-Chath the Lithe",
 		pf = "This is my profile that is describing how lithe and curvy my argonian waifu is."

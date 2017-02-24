@@ -61,7 +61,7 @@ public class ProfileService implements ProfileAPI {
         }
 
         if (!response.isSuccessful()) {
-            throw new RuntimeException("updateProfile failed");
+            HttpClient.resolveExceptionResponse(response);
         }
     }
 

@@ -2,6 +2,7 @@ package com.esolrpe.client.api;
 
 import com.esolrpe.client.config.Config;
 import com.esolrpe.shared.auth.AccountAPI;
+import com.esolrpe.shared.exception.ServiceException;
 import okhttp3.FormBody;
 import okhttp3.HttpUrl;
 import okhttp3.Request;
@@ -59,7 +60,7 @@ public class AccountService implements AccountAPI {
                     .execute();
 
             if (!response.isSuccessful()) {
-                throw new RuntimeException("register failed");
+                HttpClient.resolveExceptionResponse(response);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);

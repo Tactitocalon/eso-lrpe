@@ -1,7 +1,5 @@
 package com.esolrpe.shared.profiles;
 
-import com.esolrpe.shared.auth.AuthenticationDetails;
-
 public class ContextDeleteProfile {
     private String characterName;
 

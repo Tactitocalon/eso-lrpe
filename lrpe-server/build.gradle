@@ -1,7 +1,12 @@
+plugins {
+    id 'org.springframework.boot' version '1.5.1.RELEASE'
+}
+
 group 'com.eso-lrpe'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
+apply plugin: org.springframework.boot.gradle.plugin.SpringBootPlugin
 
 sourceCompatibility = 1.8
 

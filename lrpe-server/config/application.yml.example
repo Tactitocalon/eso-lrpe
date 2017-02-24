@@ -6,3 +6,6 @@ spring.datasource:
   driver-class-name: "com.mysql.jdbc.Driver"
   username: "username"
   password: "test"
+  
+server:
+  port: 8080

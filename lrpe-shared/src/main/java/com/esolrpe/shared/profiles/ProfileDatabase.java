@@ -50,7 +50,8 @@ public class ProfileDatabase {
         FileWriter writer = new FileWriter(file, false);
 
         writer.write("LitheDatabase = {");
-        writer.write("lastUpdateTimestamp = " + System.currentTimeMillis() + ",");
+        // ESO GetTimeStamp() returns seconds, not milliseconds
+        writer.write("lastUpdateTimestamp = " + (System.currentTimeMillis() / 1000L) + ",");
         writer.write("applicationVersion = " + applicationVersion + ",");
         writer.write("databaseVersion = " + databaseVersion + ",");
         writer.write("totalProfileCount = " + totalProfileCount + ",");

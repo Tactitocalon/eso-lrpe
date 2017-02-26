@@ -1,5 +1,9 @@
 notes:
 
+useful for potentially broadcasting RP location?
+http://www.esoui.com/downloads/info601-LibGPS2.html
+
+
 http://www.esoui.com/downloads/info44-LibStub.html
 
 http://www.esoui.com/downloads/info7-LibAddonMenu.html

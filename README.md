@@ -63,6 +63,7 @@ Normal priority:
 * Make nag period configurable.
 * Show display name and roleplayer status when looking at players.
 * Ability to link an external URL to a profile.
+* Right click context menu option in chat to view someone's profile.
 * EU / PTS megaserver support.
 * Rewrite character names to display names in chat. Needs to be compatible with pChat at minimum.
 

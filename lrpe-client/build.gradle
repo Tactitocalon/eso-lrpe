@@ -38,5 +38,5 @@ dependencies {
 
 task oneJar(type: OneJar) {
     mainClass = 'com.esolrpe.client.Application'
-    archiveName = 'eso-lrpe-client.jar'
+    archiveName = 'eso-lrpe-updater.jar'
 }

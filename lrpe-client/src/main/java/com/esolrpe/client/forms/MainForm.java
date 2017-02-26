@@ -55,7 +55,7 @@ public class MainForm extends JFrame {
         lstProfiles.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
         JScrollPane pnlProfiles = new JScrollPane(lstProfiles);
-        pnlProfiles.setBorder(new TitledBorder("Profiles"));
+        pnlProfiles.setBorder(new TitledBorder("Your Profiles"));
 
         add(pnlProfiles, "cell 0 0, spany 4, grow");
 
@@ -67,7 +67,7 @@ public class MainForm extends JFrame {
         add(btnDeleteProfile, "cell 1 2, growx");
         btnDeleteProfile.setEnabled(false); // TODO
 
-        JButton btnDownloadProfiles = new JButton("Download Profiles");
+        JButton btnDownloadProfiles = new JButton("Update Profile Database");
         add(btnDownloadProfiles, "cell 0 4, growx, spanx 2");
 
         btnNewProfile.addActionListener(a -> {

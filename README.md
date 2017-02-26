@@ -4,7 +4,11 @@
 ---
 
 ### about
-ESO-LRPE is an experimental addon that adds profile support to Elder Scrolls Online for roleplaying, so you can describe in detail how lithe and curvy your Bosmer waifu character is.
+eso-lrpe is an experimental addon that adds profile support to Elder Scrolls Online for roleplaying, so you can describe in detail how lithe and curvy your Bosmer waifu character is.
+
+If you're familiar with World of Warcraft roleplaying profile addons, I'm trying to recreate something like that. The problem with Elder Scrolls Online (and the reason why there is no profile addon so far) is that it's almost impossible to transmit information to other players ingame.
+
+eso-lrpe gets around this by using a centralized database that stores all profiles. You run a tool every day before you play ESO to download all the latest profiles.
 
 ---
 
@@ -74,6 +78,8 @@ Normal priority:
 * Right click context menu option in chat to view someone's profile.
 * EU / PTS megaserver support.
 * Rewrite character names to display names in chat. Needs to be compatible with pChat at minimum.
+* Incremental profile downloads.
+* Make the client tool not a hacky piece of shit that barely works. Loading bars would be hot.
 
 Low priority:
 * Ability to advertise looking for roleplay / events with a single button click ingame. Also single button click to view all LFRP / event advertisments.

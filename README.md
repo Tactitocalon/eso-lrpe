@@ -23,7 +23,7 @@ eso-lrpe gets around this by using a centralized database that stores all profil
 
 ### installation
 1. You must have the Java Runtime Environment (at least Version 8) installed: https://java.com/en/download/
-2. Download the eso-lrpe addon here: TODO
+2. Download the eso-lrpe addon here: https://github.com/Tactitocalon/eso-lrpe/releases
 3. Install the eso-lrpe addon to your Elder Scrolls Online addons folder.
 4. Navigate to the addon folder and run the "eso-lrpe-updater.jar" file to bring up the eso-lrpe updater tool.
 5. The updater will ask you to confirm the location of your addons folder.

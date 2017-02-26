@@ -5,10 +5,39 @@ LitheDatabase = LitheDatabase or {}
 local ADDON_NAME = "LitheRPEssentials"
 local ADDON_VERSION = 1
 
+local SECONDS_UNTIL_DATABASE_UPDATE_NAG = 60 * 60 * 18
+
 -- Library registration
-local LIBCHAT = LibStub('libChat-1.0')
+local LIB_CHAT = LibStub('libChat-1.0')
+local LIB_NOTIFICATIONS = LibStub:GetLibrary("LibNotifications")
 
 function LitheEngine:Initialize()
+	local notificationsProvider = LIB_NOTIFICATIONS:CreateProvider()
+	
+	-- TODO: Verify intgrity of LRPE database. If database fails integrity check, disable this addon.
+	
+	-- Check last time we updated the LRPE database.
+	if (GetTimeStamp() > (LitheDatabase.lastUpdateTimestamp + SECONDS_UNTIL_DATABASE_UPDATE_NAG)) then
+		local updateDatabaseMsg = {
+			dataType = NOTIFICATIONS_ALERT_DATA,
+			secsSinceRequest = ZO_NormalizeSecondsSince(0),
+			note = "Please run the ESO-LRPE Updater tool and then use the /reloadui command.",
+			message = "Roleplay profiles database is out of date, please update!",
+			heading = "ESO-LRPE",
+			texture = "/esoui/art/miscellaneous/eso_icon_warning.dds",
+			shortDisplayText = "ESO-LRPE",
+			controlsOwnSounds = true,
+			keyboardAcceptCallback = OnKeyboardAccept,
+			keybaordDeclineCallback = OnKeyboardDecline,
+			gamepadAcceptCallback = OnGamepadAccept,
+			gamepadDeclineCallback = OnGamepadDecline,
+			data = {}
+		}
+		
+		table.insert(notificationsProvider.notifications, updateDatabaseMsg)
+		notificationsProvider:UpdateNotifications()
+	end
+
 	SLASH_COMMANDS["/examine"] = LitheEngine.OnCommandExamine
 	LitheEngine:InitializeNameRewrite()
 end

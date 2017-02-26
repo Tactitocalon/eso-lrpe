@@ -7,6 +7,7 @@
 lib/LibStub/LibStub.lua
 
 lib/libChat2/libChat2.lua
+lib/LibNotification/LibNotification.lua
 
 data/LitheDatabase.lua
 LitheEngine.lua

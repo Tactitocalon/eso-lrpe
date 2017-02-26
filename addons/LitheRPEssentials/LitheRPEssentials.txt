@@ -1,8 +1,10 @@
-## Title: Lithe RP Essentials
+﻿## Title: Lithe RP Essentials
 ## Description: Roleplaying profile support, so you can describe in detail how lithe and curvy your Bosmer waifu character is.
-## APIVersion: 100017
+## APIVersion: 100018
 ## Author: Tactitocalon
 ## SavedVariables: LRPE_SavedVariables
+
+## This Add-On is not created by, affiliated with or sponsored by ZeniMax Media Inc. or its affiliates. The Elder Scrolls® and related logos are registered trademarks or trademarks of ZeniMax Media Inc. in the United States and/or other countries. All rights reserved.
 
 lib/LibStub/LibStub.lua
 
@@ -11,3 +13,5 @@ lib/LibNotification/LibNotification.lua
 
 data/LitheDatabase.lua
 LitheEngine.lua
+
+bindings.xml

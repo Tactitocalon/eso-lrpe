@@ -39,19 +39,30 @@ function LitheEngine:Initialize()
 	end
 
 	SLASH_COMMANDS["/examine"] = LitheEngine.OnCommandExamine
+	SLASH_COMMANDS["/ex"] = LitheEngine.OnCommandExamine
+	ZO_CreateStringId("SI_BINDING_NAME_ESO_LRPE_EXAMINE_MOUSEOVER", "Examine my target")
 	LitheEngine:InitializeNameRewrite()
 end
 
-
- 
 function LitheEngine.OnCommandExamine(commandData)
 	-- Extract the name that we are examining
 	local targetName = commandData or ""
 	-- Trim string
 	targetName = string.gsub(targetName , "%s$", "")
-	
-	if (targetName == "") then return end
 
+	LitheEngine.Examine(targetName)
+end
+
+function LRPE_ExamineMouseover()
+	if DoesUnitExist('reticleover') and IsUnitPlayer('reticleover') then
+		local targetName = GetUnitName('reticleover') or ""
+		LitheEngine.Examine(targetName)
+	end
+end
+
+function LitheEngine.Examine(targetName)
+	if (targetName == "") then return end
+		
 	local litheData = LitheDatabase[targetName] or nil
 	if (litheData == nil) then
 		CHAT_SYSTEM:AddMessage("No profile in database for " .. targetName .. ".")
@@ -59,9 +70,7 @@ function LitheEngine.OnCommandExamine(commandData)
 		CHAT_SYSTEM:AddMessage("Profile for " .. targetName .. ":")
 		CHAT_SYSTEM:AddMessage("|cffffff" .. (litheData.pf or "") .. "|r")
 	end
-	
 end
-
 
 function LitheEngine:InitializeNameRewrite()
 	-- TODO: In the long run, we probably want to modify the UnitFrame stuff directly, not hijack GetUnitName().

@@ -47,6 +47,14 @@ ESO-LRPE is an experimental addon that adds profile support to Elder Scrolls Onl
 
 ---
 
+### contact
+
+You can contact me (for bug reports, suggestions, contributions or shitposts) on eso-rp.com, some nerd site for roleplayers. I also hang out in their discord.
+
+http://www.eso-rp.com/profile/17561202
+
+If you like my work, you can also send me hot Bosmer waifus to @Tactitocalon (North America / PC).
+
 ### future enhancements
 
 High priority:

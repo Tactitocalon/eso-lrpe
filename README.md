@@ -1,5 +1,5 @@
 # eso-lrpe
-Lithe RP Essentials: a roleplaying addon for Elder Scrolls Online
+## Lithe RP Essentials: a roleplaying addon for Elder Scrolls Online
 
 ### about
 ESO-LRPE is an experimental addon that adds profile support to Elder Scrolls Online for roleplaying, so you can describe in detail how lithe and curvy your Bosmer waifu character is.

@@ -1,5 +1,7 @@
 # eso-lrpe
-## Lithe RP Essentials: a roleplaying addon for Elder Scrolls Online
+#### Lithe RP Essentials: a roleplaying addon for Elder Scrolls Online
+
+---
 
 ### about
 ESO-LRPE is an experimental addon that adds profile support to Elder Scrolls Online for roleplaying, so you can describe in detail how lithe and curvy your Bosmer waifu character is.
@@ -62,6 +64,7 @@ Normal priority:
 * Show display name and roleplayer status when looking at players.
 * Ability to link an external URL to a profile.
 * EU / PTS megaserver support.
+* Rewrite character names to display names in chat. Needs to be compatible with pChat at minimum.
 
 Low priority:
 * Ability to advertise looking for roleplay / events with a single button click ingame. Also single button click to view all LFRP / event advertisments.
@@ -69,4 +72,6 @@ Low priority:
 * Flag 'mature' profiles (using blacklist of naughty words).
 * Profile compression.
 * Timeout of inactive profiles from the database.
+* Autocompletion of /examine command based on available profiles. (select matching profile name, if multiple matches, display list of matches)
+* Autocomplete /examine command based on nearby players (or maybe recently seen / chatting players). Not sure if possible. Maybe a GUI element for it too so you can just bring up a list.
 * Counter on website to display the number of times the word "lithe" has been used in profiles.

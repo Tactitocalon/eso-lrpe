@@ -36,7 +36,7 @@ public class Config {
         }
     }
 
-    private String serverUri = "http://localhost:8080/";
+    private String serverUri = "https://api.eso-lrpe.com/";
 
     private String lrpeUsername;
     private String lrpePassword;
@@ -49,7 +49,7 @@ public class Config {
     private String esoAddonLocation;
     private String lrpeAddonName;
 
-    private String megaserver;
+    private String megaserver = "NA";
 
     public String getServerUri() {
         return serverUri;

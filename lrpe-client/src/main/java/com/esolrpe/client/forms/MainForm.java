@@ -112,6 +112,7 @@ public class MainForm extends JFrame {
                     "Download and installation of profiles complete!",
                     "Success", JOptionPane.INFORMATION_MESSAGE);
             MainForm.this.dispose();
+            waitLatch.countDown();
         });
 
         lstProfiles.addListSelectionListener(e -> {

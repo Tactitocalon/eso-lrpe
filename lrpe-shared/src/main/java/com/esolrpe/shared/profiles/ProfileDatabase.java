@@ -1,5 +1,7 @@
 package com.esolrpe.shared.profiles;
 
+import com.esolrpe.shared.security.Security;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -59,9 +61,9 @@ public class ProfileDatabase {
                 writer.write(",");
             }
             writer.write("[\"" + profile.getCharacterName() + "\"]={nm=\""
-                    + sanitizeValue(profile.getDisplayName()) + "\",pf=\""
-                    + sanitizeValue(profile.getProfileText()) + "\",url=\""
-                    + sanitizeValue(profile.getProfileUrl()) + "\"}");
+                    + Security.escapeLuaString(profile.getDisplayName()) + "\",pf=\""
+                    + Security.escapeLuaString(profile.getProfileText()) + "\",url=\""
+                    + Security.escapeLuaString(profile.getProfileUrl()) + "\"}");
             firstProfile = false;
         }
 
@@ -69,13 +71,4 @@ public class ProfileDatabase {
 
         writer.close();
     }
-
-    private static String sanitizeValue(String string) {
-        if (string == null) {
-            return "";
-        }
-
-        return string.replace("\n", "\\n").replace("\r", "");
-    }
-
 }

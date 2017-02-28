@@ -2,6 +2,7 @@ package com.esolrpe.client.forms;
 
 import com.esolrpe.client.api.ProfileService;
 import com.esolrpe.client.config.Config;
+import com.esolrpe.client.tray.AppTrayIcon;
 import com.esolrpe.shared.profiles.ContextUpdateProfile;
 import com.esolrpe.shared.profiles.ProfileData;
 import net.miginfocom.swing.MigLayout;
@@ -19,6 +20,8 @@ public class EditProfileDialog extends JDialog {
     public EditProfileDialog(Frame owner, ProfileData profileData) {
         super(owner, owner.getTitle(), true);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        AppTrayIcon.getInstance().registerHideableComponent(this);
+        FormUtils.setIcon(this);
 
         JPanel contentPanel = new JPanel();
         contentPanel.setLayout(new MigLayout("", "[][400px]", "[][][][fill][]"));

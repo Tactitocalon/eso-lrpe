@@ -3,6 +3,7 @@ package com.esolrpe.client.forms;
 import com.esolrpe.client.Application;
 import com.esolrpe.client.api.ProfileService;
 import com.esolrpe.client.config.Config;
+import com.esolrpe.client.tray.AppTrayIcon;
 import com.esolrpe.shared.profiles.ContextDeleteProfile;
 import com.esolrpe.shared.profiles.ProfileData;
 import com.esolrpe.shared.profiles.ProfileDatabase;
@@ -45,6 +46,8 @@ public class MainForm extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setTitle(Application.TITLE);
         setResizable(false);
+        FormUtils.setIcon(this);
+        AppTrayIcon.getInstance().registerHideableComponent(this);
 
         setLayout(new MigLayout("", "[300px][]", "[][][][][]"));
 

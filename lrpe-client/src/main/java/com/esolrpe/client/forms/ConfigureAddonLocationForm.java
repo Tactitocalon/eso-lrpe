@@ -30,6 +30,7 @@ public class ConfigureAddonLocationForm extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setTitle(Application.TITLE);
         setResizable(false);
+        FormUtils.setIcon(this);
 
         setLayout(new MigLayout("", "[500px][]", "[][][]8px[]"));
 

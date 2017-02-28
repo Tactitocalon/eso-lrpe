@@ -28,6 +28,7 @@ public class ConfigureCredentialsForm extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setTitle(Application.TITLE);
         setResizable(false);
+        FormUtils.setIcon(this);
 
         setLayout(new MigLayout("", "[][250px]", "[]8px[][][]8px[]"));
 

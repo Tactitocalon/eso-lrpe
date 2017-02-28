@@ -7,6 +7,7 @@
     import com.esolrpe.client.forms.ConfigureAddonLocationForm;
     import com.esolrpe.client.forms.ConfigureCredentialsForm;
     import com.esolrpe.client.forms.MainForm;
+    import com.esolrpe.client.tray.AppTrayIcon;
     import com.esolrpe.shared.version.VersionDetails;
 
     import javax.swing.SwingUtilities;
@@ -23,6 +24,8 @@
                 assert(!SwingUtilities.isEventDispatchThread());
                 ExceptionHandler.setupGlobalExceptionHandling();
                 Config config = Config.getInstance();
+
+                AppTrayIcon.init();
 
                 doVersionCheck();
                 if (config.getEsoAddonLocation() == null) {

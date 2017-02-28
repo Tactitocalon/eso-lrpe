@@ -168,7 +168,9 @@ public class MainForm extends JFrame {
 
         if (Application.STARTUP_MODE) {
             AppTrayIcon.getInstance().hideApp();
-            ProfileManager.updateProfiles(s -> SwingUtilities.invokeLater(() -> txtUpdateLog.append(s)));
+            new Thread(() -> {
+                ProfileManager.updateProfiles(s -> SwingUtilities.invokeLater(() -> txtUpdateLog.append(s)));
+            }).start();
         } else {
             setVisible(true);
             StartupLaunchUtils.askStartupLaunchQuestion();

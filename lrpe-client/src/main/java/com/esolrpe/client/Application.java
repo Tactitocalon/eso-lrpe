@@ -17,9 +17,10 @@
         public static final String TITLE = "ESO-LRPE Updater";
         public static boolean STARTUP_MODE = false;
 
-        public static void main(String[] args) {
+        public static void main(String[] args) throws InterruptedException {
             if (args.length >= 1 && "-startup".equals(args[0])) {
                 STARTUP_MODE = true;
+                Thread.sleep(10000);
             }
             run();
         }

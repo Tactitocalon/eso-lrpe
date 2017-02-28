@@ -20,7 +20,7 @@ public class ProfileService implements ProfileAPI {
     @Override
     public ProfileDatabaseUpdate syncProfiles(String megaserverCode, Long currentVersion) {
         Request request = new Request.Builder()
-                .url(Config.getInstance().getServerUri() + "profiles/na/sync")
+                .url(Config.getInstance().getServerUri() + "profiles/" + megaserverCode + "/sync")
                 .build();
         try {
             Response response = HttpClient.getInstance()

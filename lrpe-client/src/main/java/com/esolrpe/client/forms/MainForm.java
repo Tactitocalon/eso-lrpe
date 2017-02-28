@@ -15,10 +15,12 @@ import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 import javax.swing.border.TitledBorder;
+import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -49,7 +51,7 @@ public class MainForm extends JFrame {
         FormUtils.setIcon(this);
         AppTrayIcon.getInstance().registerHideableComponent(this);
 
-        setLayout(new MigLayout("", "[300px][]", "[][][][][]"));
+        setLayout(new MigLayout("", "[350px][]", "[][][][][][]"));
 
         lstProfiles = new JList<>();
         lstProfiles.setOpaque(false);
@@ -68,7 +70,16 @@ public class MainForm extends JFrame {
         add(btnEditProfile, "cell 1 1, growx");
         JButton btnDeleteProfile = new JButton("Delete Profile");
         add(btnDeleteProfile, "cell 1 2, growx");
-        btnDeleteProfile.setEnabled(false); // TODO
+
+        JTextArea txtUpdateLog = new JTextArea();
+        txtUpdateLog.setLineWrap(true);
+        txtUpdateLog.setRows(8);
+        txtUpdateLog.setFont(new Font("monospaced", Font.PLAIN, 12));
+        txtUpdateLog.setEditable(false);
+
+        JScrollPane pnlUpdateLog = new JScrollPane(txtUpdateLog);
+        add(pnlUpdateLog, "cell 0 5, growx, spanx 2");
+
 
         JButton btnDownloadProfiles = new JButton("Update Profile Database");
         add(btnDownloadProfiles, "cell 0 4, growx, spanx 2");
@@ -93,7 +104,16 @@ public class MainForm extends JFrame {
         });
 
         btnDownloadProfiles.addActionListener(e -> {
-            ProfileDatabaseUpdate profileDatabaseUpdate = new ProfileService().syncProfiles(Config.getInstance().getMegaserver(), 0L);
+            txtUpdateLog.append(FormUtils.getNowAsString() + " - Beginning profile database update.\n");
+
+            ProfileDatabaseUpdate profileDatabaseUpdate;
+            try {
+                profileDatabaseUpdate = new ProfileService().syncProfiles(Config.getInstance().getMegaserver(), 0L);
+            } catch (Exception exception) {
+                txtUpdateLog.append(FormUtils.getNowAsString() + " - Error occurred profile database update.\n");
+                txtUpdateLog.append(FormUtils.getStackTrace(exception) + "\n");
+                throw exception;
+            }
 
             // TODO: need to read an existing profile database or w/e
             ProfileDatabase profileDatabase = new ProfileDatabase();
@@ -111,11 +131,17 @@ public class MainForm extends JFrame {
                 throw new RuntimeException(e1);
             }
 
-            JOptionPane.showMessageDialog(null,
-                    "Download and installation of profiles complete!",
-                    "Success", JOptionPane.INFORMATION_MESSAGE);
-            MainForm.this.dispose();
-            waitLatch.countDown();
+            int newProfiles = profileDatabaseUpdate.getProfiles().size();
+            int totalProfiles = profileDatabase.getProfiles().size();
+            txtUpdateLog.append(FormUtils.getNowAsString() + " - Database update complete.\nReceived " + newProfiles
+                    + " new profile" + (newProfiles == 1 ? "" : "s")
+                    + ", database now contains " + totalProfiles + " profiles.\n");
+
+            if (this.isVisible()) {
+                JOptionPane.showMessageDialog(null,
+                        "Download and installation of profiles complete!",
+                        "Success", JOptionPane.INFORMATION_MESSAGE);
+            }
         });
 
         lstProfiles.addListSelectionListener(e -> {

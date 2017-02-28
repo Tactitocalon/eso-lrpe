@@ -38,6 +38,8 @@ public class Config {
 
     private String serverUri = "https://api.eso-lrpe.com/";
 
+    private boolean askedStartupLaunchQuestion = false;
+
     private String lrpeUsername;
     private String lrpePassword;
 
@@ -121,5 +123,13 @@ public class Config {
 
     public void setMegaserver(String megaserver) {
         this.megaserver = megaserver;
+    }
+
+    public boolean isAskedStartupLaunchQuestion() {
+        return askedStartupLaunchQuestion;
+    }
+
+    public void setAskedStartupLaunchQuestion(boolean askedStartupLaunchQuestion) {
+        this.askedStartupLaunchQuestion = askedStartupLaunchQuestion;
     }
 }

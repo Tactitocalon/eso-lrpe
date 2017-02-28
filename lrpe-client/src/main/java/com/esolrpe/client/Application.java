@@ -7,6 +7,7 @@
     import com.esolrpe.client.forms.ConfigureAddonLocationForm;
     import com.esolrpe.client.forms.ConfigureCredentialsForm;
     import com.esolrpe.client.forms.MainForm;
+    import com.esolrpe.client.startup.StartupLaunchUtils;
     import com.esolrpe.client.tray.AppTrayIcon;
     import com.esolrpe.shared.version.VersionDetails;
 
@@ -14,8 +15,12 @@
 
     public class Application {
         public static final String TITLE = "ESO-LRPE Updater";
+        public static boolean STARTUP_MODE = false;
 
         public static void main(String[] args) {
+            if (args.length >= 1 && "-startup".equals(args[0])) {
+                STARTUP_MODE = true;
+            }
             run();
         }
 

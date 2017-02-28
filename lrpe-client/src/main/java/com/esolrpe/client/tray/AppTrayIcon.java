@@ -18,6 +18,7 @@ import java.util.WeakHashMap;
 
 public class AppTrayIcon {
     private static AppTrayIcon instance;
+    private final CheckboxMenuItem hideToTray;
 
     private boolean isMinimized = false;
     Set<Component> registeredComponents = Collections.newSetFromMap(new WeakHashMap<>());
@@ -43,7 +44,7 @@ public class AppTrayIcon {
         popupMenu = new PopupMenu();
         trayIcon = new TrayIcon(imgTrayIcon, "eso-lrpe-updater");
 
-        CheckboxMenuItem hideToTray = new CheckboxMenuItem("Hide to tray");
+        hideToTray = new CheckboxMenuItem("Hide to tray");
         hideToTray.addItemListener(e -> {
             if (hideToTray.getState()) {
                 hideApp();
@@ -69,10 +70,16 @@ public class AppTrayIcon {
 
     public void hideApp() {
         registeredComponents.forEach(c -> c.setVisible(false));
+        if (!hideToTray.getState()) {
+            hideToTray.setState(true);
+        }
     }
 
     public void showApp() {
         registeredComponents.forEach(c -> c.setVisible(true));
+        if (hideToTray.getState()) {
+            hideToTray.setState(false);
+        }
     }
 
     public static void init() {

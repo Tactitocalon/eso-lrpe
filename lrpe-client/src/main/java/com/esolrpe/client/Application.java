@@ -32,6 +32,9 @@
                 Config config = Config.getInstance();
 
                 AppTrayIcon.init();
+                if (STARTUP_MODE) {
+                    AppTrayIcon.getInstance().hideApp();
+                }
 
                 doVersionCheck();
                 if (config.getEsoAddonLocation() == null) {
@@ -51,6 +54,7 @@
                 MainForm.display();
             } catch (Exception e) {
                 ExceptionHandler.handleException(e);
+                System.exit(0);
             }
         }
 

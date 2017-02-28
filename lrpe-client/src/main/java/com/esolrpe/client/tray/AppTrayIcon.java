@@ -6,6 +6,7 @@ import java.awt.AWTException;
 import java.awt.CheckboxMenuItem;
 import java.awt.Component;
 import java.awt.Image;
+import java.awt.MenuItem;
 import java.awt.PopupMenu;
 import java.awt.SystemTray;
 import java.awt.TrayIcon;
@@ -53,6 +54,10 @@ public class AppTrayIcon {
             }
         });
         popupMenu.add(hideToTray);
+        MenuItem menuItemExit = new MenuItem("Exit");
+        menuItemExit.addActionListener(e -> System.exit(0));
+        popupMenu.add(menuItemExit);
+
         trayIcon.setPopupMenu(popupMenu);
 
         final SystemTray tray = SystemTray.getSystemTray();

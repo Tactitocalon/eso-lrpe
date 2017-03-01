@@ -13,8 +13,12 @@ import com.esolrpe.shared.profiles.ProfileDatabaseUpdate;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -22,6 +26,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.MenuEvent;
+import javax.swing.event.MenuListener;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -145,6 +151,37 @@ public class MainForm extends JFrame {
                 refreshProfiles();
             }
         });
+
+        JMenuBar menuBar = new JMenuBar();
+        JMenu menu = new JMenu("File");
+        menu.setMnemonic('F');
+
+        JCheckBoxMenuItem mniLaunchOnStartup = new JCheckBoxMenuItem("Launch on system startup");
+        menu.addActionListener(e -> {
+            mniLaunchOnStartup.setState(StartupLaunchUtils.checkIfStartupLaunchInstalled());
+        });
+        mniLaunchOnStartup.addItemListener(l -> {
+            if (mniLaunchOnStartup.getState()) {
+                StartupLaunchUtils.uninstallStartupLaunch();
+            } else {
+                StartupLaunchUtils.installStartupLaunch();
+            }
+        });
+        menu.add(mniLaunchOnStartup);
+
+        JMenuItem mniAbout = new JMenuItem("About");
+        mniAbout.setMnemonic('A');
+        menu.add(mniAbout);
+
+        JMenuItem mniExit = new JMenuItem("Exit");
+        mniExit.setMnemonic('X');
+        menu.add(mniExit);
+        mniExit.addActionListener(e -> {
+            System.exit(0);
+        });
+
+        menuBar.add(menu);
+        this.setJMenuBar(menuBar);
 
         refreshProfiles();
         lstProfiles.addMouseListener(new MouseAdapter() {

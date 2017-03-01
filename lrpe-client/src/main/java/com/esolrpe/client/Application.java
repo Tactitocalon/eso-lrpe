@@ -14,7 +14,7 @@
     import javax.swing.SwingUtilities;
 
     public class Application {
-        public static final String TITLE = "ESO-LRPE Updater";
+        public static final String TITLE = "eso-lrpe-updater";
         public static boolean STARTUP_MODE = false;
 
         public static void main(String[] args) throws InterruptedException {

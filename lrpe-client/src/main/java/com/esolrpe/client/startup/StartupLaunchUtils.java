@@ -1,18 +1,27 @@
 package com.esolrpe.client.startup;
 
 import mslinks.ShellLink;
+import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URISyntaxException;
-import java.net.URLDecoder;
-import java.security.CodeSource;
 
 // TODO: this is Windows only ATM. need to make platform independent, or at least fail gracefully on non-Windows platforms.
 public class StartupLaunchUtils {
     public static void askStartupLaunchQuestion() {
 
+    }
+
+    public static boolean checkIfStartupLaunchInstalled() {
+        String startupFolderStr = VBSUtils.getSpecialFolder(VBSUtils.SF_STARTUP);
+        File startupLink = new File(startupFolderStr, "eso-lrpe-updater.lnk");
+        return startupLink.isFile();
+    }
+
+    public static void uninstallStartupLaunch() {
+        String startupFolderStr = VBSUtils.getSpecialFolder(VBSUtils.SF_STARTUP);
+        File startupLink = new File(startupFolderStr, "eso-lrpe-updater.lnk");
+        FileUtils.deleteQuietly(startupLink);
     }
 
     public static void installStartupLaunch() {

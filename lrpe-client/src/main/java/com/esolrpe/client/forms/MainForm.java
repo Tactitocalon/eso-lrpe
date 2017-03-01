@@ -171,7 +171,11 @@ public class MainForm extends JFrame {
 
         JMenuItem mniAbout = new JMenuItem("About");
         mniAbout.setMnemonic('A');
+        mniAbout.addActionListener(e -> {
+            new AboutDialog(this).setVisible(true);
+        });
         menu.add(mniAbout);
+
 
         JMenuItem mniExit = new JMenuItem("Exit");
         mniExit.setMnemonic('X');

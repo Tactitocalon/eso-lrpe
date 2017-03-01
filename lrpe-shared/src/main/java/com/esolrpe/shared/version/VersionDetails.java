@@ -3,7 +3,7 @@ package com.esolrpe.shared.version;
 public class VersionDetails {
     public static VersionDetails createCurrentVersionDetails() {
         VersionDetails versionDetails = new VersionDetails();
-        versionDetails.version = 1;
+        versionDetails.version = 2;
         versionDetails.updateMessage = "A new version of LRPE is available. " +
                 "Please download the most recent update: https://github.com/Tactitocalon/eso-lrpe";
         versionDetails.updateUrl = "https://github.com/Tactiticalon/eso-lrpe";

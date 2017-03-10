@@ -32,7 +32,7 @@ public class ProfileManager {
         profileDatabase.setTotalProfileCount(profileDatabaseUpdate.getTotalProfileCount());
         profileDatabase.setProfiles(profileDatabaseUpdate.getProfiles());
 
-        File database = new File(Config.getInstance().getEsoAddonLocation(), "LitheRPEssentials/data/LitheDatabase.lua");
+        File database = new File(Config.getInstance().getEsoAddonLocation(), "eso-lrpe/data/LitheDatabase.lua");
         database.delete();
 
         try {

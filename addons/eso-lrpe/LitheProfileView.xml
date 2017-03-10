@@ -1,0 +1,23 @@
+<GuiXml>
+    <Controls>
+        <TopLevelControl name="LitheProfileView" movable="true" mouseEnabled="true">
+            <Dimensions x="800" y="600" />
+            <Anchor point="CENTER" />
+ 
+            <OnUpdate>
+                MyFirstAddOnUpdate()
+            </OnUpdate>
+ 
+            <OnInitialized>
+                MyFirstAddOnInitialized()
+            </OnInitialized>
+ 
+            <Controls>
+                <Backdrop name="$(parent)BG" inherits="ZO_ThinBackdrop" />
+                <Label name="$(parent)Counter" font="ZoFontWindowTitle" color="CFDCBD" wrapMode="ELLIPSIS" verticalAlignment="CENTER" text="Counter: ">
+                    <AnchorFill />
+                </Label>
+            </Controls>
+        </TopLevelControl>
+    </Controls>
+</GuiXml>

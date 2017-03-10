@@ -1,15 +1,18 @@
+LitheGUI = LitheGUI or {}
 LitheEngine = LitheEngine or {}
 LitheDatabase = LitheDatabase or {}
 
 -- Addon constants
-local ADDON_NAME = "LitheRPEssentials"
-local ADDON_VERSION = 1
+local ADDON_NAME = "eso-lrpe"
+local ADDON_VERSION = 2
 
-local SECONDS_UNTIL_DATABASE_UPDATE_NAG = 60 * 60 * 18
+local SECONDS_UNTIL_DATABASE_UPDATE_NAG = 60 * 60 * 48
 
 -- Library registration
 local LIB_CHAT = LibStub('libChat-1.0')
 local LIB_NOTIFICATIONS = LibStub:GetLibrary("LibNotifications")
+
+local lastExaminedPlayer = nil
 
 function LitheEngine:Initialize()
 	local notificationsProvider = LIB_NOTIFICATIONS:CreateProvider()
@@ -54,21 +57,44 @@ function LitheEngine.OnCommandExamine(commandData)
 end
 
 function LRPE_ExamineMouseover()
+	local profileView = LitheGUI:GetProfileView()
+	
 	if DoesUnitExist('reticleover') and IsUnitPlayer('reticleover') then
 		local targetName = GetUnitName('reticleover') or ""
-		LitheEngine.Examine(targetName)
+		-- If the profile view is still open, and we're not examining a different player, we want to close it.
+		if (lastExaminedPlayer == targetName and profileView:IsVisible()) then
+			lastExaminedPlayer = ""
+			profileView:SetVisible(false)
+		else	
+			LitheEngine.Examine(targetName)
+		end	
+	else
+		profileView:SetVisible(false)
 	end
 end
 
 function LitheEngine.Examine(targetName)
-	if (targetName == "") then return end
-		
+	lastExaminedPlayer = targetName
+	if (targetName == "") then 
+		return
+	end
+	
+	local profileView = LitheGUI:GetProfileView()
+	
 	local litheData = LitheDatabase[targetName] or nil
 	if (litheData == nil) then
 		CHAT_SYSTEM:AddMessage("No profile in database for " .. targetName .. ".")
+		profileView:SetVisible(false)
 	else
-		CHAT_SYSTEM:AddMessage("Profile for " .. targetName .. ":")
-		CHAT_SYSTEM:AddMessage("|cffffff" .. (litheData.pf or "") .. "|r")
+		profileView:SetActualName(targetName)
+		local displayName = litheData.nm or targetName
+		if (displayName == "") then
+			displayName = targetName
+		end
+		profileView:SetDisplayName(displayName)
+		profileView:SetProfileText(litheData.pf or "")
+		
+		profileView:SetVisible(true)
 	end
 end
 

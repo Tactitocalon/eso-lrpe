@@ -61,7 +61,7 @@ public class ProfileDatabase {
             if (!firstProfile) {
                 writer.write(",");
             }
-            writer.write("[\"" + profile.getCharacterName() + "\"]={nm=\""
+            writer.write("[\"" + Security.escapeLuaString(profile.getCharacterName()) + "\"]={nm=\""
                     + Security.escapeLuaString(profile.getDisplayName()) + "\",pf=\""
                     + Security.escapeLuaString(profile.getProfileText()) + "\",url=\""
                     + Security.escapeLuaString(profile.getProfileUrl()) + "\"}");

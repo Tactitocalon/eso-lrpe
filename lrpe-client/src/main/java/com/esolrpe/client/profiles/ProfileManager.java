@@ -2,12 +2,10 @@ package com.esolrpe.client.profiles;
 
 import com.esolrpe.client.api.ProfileService;
 import com.esolrpe.client.config.Config;
-import com.esolrpe.client.forms.FormUtils;
+import com.esolrpe.client.forms.util.FormUtils;
 import com.esolrpe.shared.profiles.ProfileDatabase;
 import com.esolrpe.shared.profiles.ProfileDatabaseUpdate;
 
-import javax.swing.JOptionPane;
-import javax.swing.JTextArea;
 import java.io.File;
 import java.io.IOException;
 import java.util.function.Consumer;

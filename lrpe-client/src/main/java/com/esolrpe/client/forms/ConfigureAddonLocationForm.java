@@ -2,6 +2,7 @@ package com.esolrpe.client.forms;
 
 import com.esolrpe.client.Application;
 import com.esolrpe.client.config.Config;
+import com.esolrpe.client.forms.util.FormUtils;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.JButton;

@@ -1,4 +1,4 @@
-package com.esolrpe.client.forms;
+package com.esolrpe.client.forms.util;
 
 import com.esolrpe.client.tray.AppTrayIcon;
 

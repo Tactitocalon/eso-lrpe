@@ -3,6 +3,7 @@ package com.esolrpe.server.profiles;
 import com.esolrpe.server.Application;
 import com.esolrpe.server.auth.AuthenticationUtils;
 import com.esolrpe.server.util.Megaserver;
+import com.esolrpe.shared.exception.ValidationException;
 import com.esolrpe.shared.profiles.ContextDeleteProfile;
 import com.esolrpe.shared.profiles.ContextUpdateProfile;
 import com.esolrpe.shared.profiles.ProfileAPI;
@@ -89,6 +90,11 @@ public class ProfileController implements ProfileAPI {
         if (megaserver == null) {
             throw new RuntimeException("Unknown megaserver '" + megaserverCode + "'.");
         }
+
+        if (characterName.length() > ProfileAPI.MAXIMUM_ACTUAL_NAME_SIZE) {
+            throw new ValidationException("Character name must not be longer than " + ProfileAPI.MAXIMUM_ACTUAL_NAME_SIZE + " characters.");
+        }
+        profileData.validate();
 
         // Verify we are not disallowed to update this profile.
         List<ProfileData> currentProfileList = jdbcTemplate.query(

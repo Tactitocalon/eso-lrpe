@@ -1,5 +1,6 @@
 package com.esolrpe.client.forms;
 
+import com.esolrpe.client.forms.util.FormUtils;
 import com.esolrpe.client.tray.AppTrayIcon;
 import com.esolrpe.shared.version.VersionDetails;
 import net.miginfocom.swing.MigLayout;

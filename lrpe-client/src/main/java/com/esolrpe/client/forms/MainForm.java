@@ -29,6 +29,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 import java.awt.Font;
+import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -157,16 +158,37 @@ public class MainForm extends JFrame {
         menu.setMnemonic('F');
 
         JCheckBoxMenuItem mniLaunchOnStartup = new JCheckBoxMenuItem("Launch on system startup");
+        ItemListener menuSelectListener = l -> {
+            if (mniLaunchOnStartup.getState()) {
+                StartupLaunchUtils.installStartupLaunch();
+            } else {
+                StartupLaunchUtils.uninstallStartupLaunch();
+            }
+        };
+
         menu.addActionListener(e -> {
             mniLaunchOnStartup.setState(StartupLaunchUtils.checkIfStartupLaunchInstalled());
         });
-        mniLaunchOnStartup.addItemListener(l -> {
-            if (mniLaunchOnStartup.getState()) {
-                StartupLaunchUtils.uninstallStartupLaunch();
-            } else {
-                StartupLaunchUtils.installStartupLaunch();
+
+        menu.addMenuListener(new MenuListener() {
+            @Override
+            public void menuSelected(MenuEvent e) {
+                mniLaunchOnStartup.removeItemListener(menuSelectListener);
+                mniLaunchOnStartup.setState(StartupLaunchUtils.checkIfStartupLaunchInstalled());
+                mniLaunchOnStartup.addItemListener(menuSelectListener);
+            }
+
+            @Override
+            public void menuDeselected(MenuEvent e) {
+
+            }
+
+            @Override
+            public void menuCanceled(MenuEvent e) {
+
             }
         });
+        mniLaunchOnStartup.addItemListener(menuSelectListener);
         menu.add(mniLaunchOnStartup);
 
         JMenuItem mniAbout = new JMenuItem("About");

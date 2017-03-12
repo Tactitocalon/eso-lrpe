@@ -1,6 +1,7 @@
 package com.esolrpe.client.config;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -26,7 +27,7 @@ public class Config {
     }
 
     public static void save() {
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String configJson = gson.toJson(config);
 
         try {
